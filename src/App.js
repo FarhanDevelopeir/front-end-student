@@ -1,23 +1,32 @@
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import Login from './components/Authentication/Login';
+import CreateContextApp from './components/Context/Contaxtapi'
+import { BrowserRouter, Route, Routes, } from 'react-router-dom';
+import Signup from './components/Authentication/Signup';
+import AdminDashbord from './components/Admincomponents/AdminDashbord';
+import UserDashboard from './components/Usercomponents/UserDashboard';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+    <BrowserRouter>
+      <CreateContextApp>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          
+          <Route path='/adminpanel' element={<AdminDashbord />} />
+
+          <Route path='/userpanel' element={<UserDashboard />} />
+          
+
+
+        </Routes>
+      </CreateContextApp>
+    </BrowserRouter>
     </div>
   );
 }
