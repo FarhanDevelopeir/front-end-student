@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
+import { UseContextdata } from '../Context/Contaxtapi';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -13,6 +14,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Admindashboardcontent = () => {
+    const {  allStudents,allCount, getNumOfLAP } = UseContextdata();
+
+    console.log(allCount)
+
+    useEffect(() => {
+        const date = new Date()
+        const currentDate = date.toISOString()
+        getNumOfLAP(currentDate)
+    }, [])
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 ,width:'95%' , margin:'30px auto'}}>
@@ -20,25 +31,25 @@ const Admindashboardcontent = () => {
                     <Grid xs={6} md={3} >
                         <Item sx={{padding:'60px 0px', boxShadow: `0px 2px 10px 2px rgba(0,0,0,0.1)`, backgroundColor:'#fff', borderRadius:'15px'}}>
                             <h6 style={{backgroundColor:'#fff'}}>Total Students</h6>
-                            <h2 style={{backgroundColor:'#fff'}}>20</h2>
+                            <h2 style={{backgroundColor:'#fff'}}>{allStudents.length}</h2>
                         </Item>
                     </Grid>
                     <Grid xs={6} md={3}>
                         <Item sx={{padding:'60px 0px', boxShadow: `0px 2px 10px 2px rgba(0,0,0,0.1)`, backgroundColor:'#fff', borderRadius:'15px'}}>
                         <h6 style={{backgroundColor:'#fff'}}>Today Present</h6>
-                            <h2 style={{backgroundColor:'#fff'}}>13</h2>
+                            <h2 style={{backgroundColor:'#fff'}}>{allCount[2]}</h2>
                         </Item>
                     </Grid>
                     <Grid xs={6} md={3}>
                         <Item sx={{padding:'60px 0px', boxShadow: `0px 2px 10px 2px rgba(0,0,0,0.1)`, backgroundColor:'#fff', borderRadius:'15px'}}>
                         <h6 style={{backgroundColor:'#fff'}}>Today Absents</h6>
-                            <h2 style={{backgroundColor:'#fff'}}>2</h2>
+                            <h2 style={{backgroundColor:'#fff'}}>{allCount[1]}</h2>
                         </Item>
                     </Grid>
                     <Grid xs={6} md={3}>
                         <Item sx={{padding:'60px 0px', boxShadow: `0px 2px 10px 2px rgba(0,0,0,0.1)`, backgroundColor:'#fff', borderRadius:'15px'}}>
                         <h6 style={{backgroundColor:'#fff'}}>Today Leaves</h6>
-                            <h2 style={{backgroundColor:'#fff'}}>5</h2>
+                            <h2 style={{backgroundColor:'#fff'}}>{allCount[0]}</h2>
                         </Item>
                     </Grid>
                     {/* <Grid xs={6} md={4}>

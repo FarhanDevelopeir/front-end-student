@@ -11,7 +11,7 @@ import { UseContextdata } from '../Context/Contaxtapi'
 
 
 const SignUp = () => {
-  const {data, setdata}=UseContextdata()
+  const { data, setdata, loginType } = UseContextdata()
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate()
   const [Errorname, setErrorName] = useState(false)
@@ -25,7 +25,46 @@ const SignUp = () => {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleAdminSubmit = (e) => {
+    e.preventDefault()
+    setErrorName(false)
+    setErrorEmail(false)
+    setErrorPassword(false)
+    if (formData.email === '') {
+      setErrorEmail(true)
+
+    }
+    if (formData.name === '') {
+      setErrorName(true)
+
+    }
+    if (formData.password === '') {
+
+      setErrorPassword(true)
+    }
+    else {
+
+      // console.log(formData);
+      // signupform(formData)
+      handleAdminformdata(formData)
+      navigate('/login')
+    }
+  }
+
+  const handleAdminformdata=async(formData)=>{
+    try{
+      const res = await axios.post('http://localhost:3000/admin/signup',formData)
+      // console.log(res.data)
+      setdata([res.data])
+      console.log(data)
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
+
+  const handleUserSubmit = (e) => {
     e.preventDefault()
     setErrorName(false)
     setErrorEmail(false)
@@ -46,22 +85,23 @@ const SignUp = () => {
 
       console.log(formData);
       // signupform(formData)
-     handleformdata(formData)
+      handleUserformdata(formData)
+      navigate('/login')
     }
   }
 
-  const handleformdata=async(formData)=>{
+  const handleUserformdata = async (formData) => {
     try {
-      const res = await axios.post('http://localhost:3000/student/signup',formData)
+      const res = await axios.post('http://localhost:3000/student/signup', formData)
       // console.log(res.data);
       setdata([res.data]);
       console.log(data)
       // navigate('/userpanel')
-      
+
     } catch (error) {
       console.log('err', error)
     }
-    
+
   }
 
   return (
@@ -78,8 +118,8 @@ const SignUp = () => {
 
                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                    <form class="mx-1 mx-md-4" onSubmit={handleSubmit}>
-                    
+                    <form class="mx-1 mx-md-4" >
+
 
                       <div class=" flex-row align-items-center mb-4 " >
                         <div className='d-flex flex-row align-items-center mb-4  '>
@@ -92,9 +132,9 @@ const SignUp = () => {
                               label='Name'
                               variant="standard"
                               fullWidth
-                            value={formData.name}
-                            onChange={handleChange}
-                            error={Errorname}
+                              value={formData.name}
+                              onChange={handleChange}
+                              error={Errorname}
                             />
                           </div>
 
@@ -113,9 +153,9 @@ const SignUp = () => {
                               label='Email'
                               variant="standard"
                               fullWidth
-                            value={formData.email}
-                            onChange={handleChange}
-                            error={Erroremail}
+                              value={formData.email}
+                              onChange={handleChange}
+                              error={Erroremail}
                             />
                           </div>
                         </div>
@@ -133,9 +173,9 @@ const SignUp = () => {
                               variant="standard"
                               label='Password'
                               fullWidth
-                            value={formData.password}
-                            onChange={handleChange}
-                            error={Errorpassword}
+                              value={formData.password}
+                              onChange={handleChange}
+                              error={Errorpassword}
                             />
                           </div>
                         </div>
@@ -153,11 +193,16 @@ const SignUp = () => {
                     </div>
                   </div> */}
 
-                      <div class="d-flex justify-content-center mx-4 mt-5 ">
-                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                      </div>
+                      {loginType === false ?
+                        <div class="d-flex justify-content-center mx-4 mt-5 ">
+                          <button type="submit" onClick={handleUserSubmit} class="btn btn-primary btn-lg">User-Register</button>
+                        </div> :
+                        <div class="d-flex justify-content-center mx-4 mt-5 ">
+                          <button type="submit" onClick={handleAdminSubmit} class="btn btn-primary btn-lg">Teacher-Register</button>
+                        </div>
+                      }
                       <p class="small fw-bold text-center  w-100 mb-0">Already have an account?
-                        <Link to={'/'} >
+                        <Link to={'/login'} >
                           <a class="link-danger">Login</a>
                         </Link>
                       </p>

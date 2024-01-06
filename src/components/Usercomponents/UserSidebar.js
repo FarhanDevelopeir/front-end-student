@@ -2,19 +2,20 @@ import React, { useState } from 'react'
 // import { TocRounded } from '@material-ui/icons';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { DashboardRounded } from '@material-ui/icons';
-import { ColorLensRounded } from '@material-ui/icons';
+// import { DashboardRounded } from '@material-ui/icons';
+// import { ColorLensRounded } from '@material-ui/icons';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { motion } from 'framer-motion'
 import { UseContextdata } from '../Context/Contaxtapi';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 
 const UserSidebar = () => {
     const [open, setOpen] = useState(true)
-    const { handleSidebarItemClick } = UseContextdata();
+    const { handleSidebarItemClick ,handleStudentLogout} = UseContextdata();
     const [theme, setTheme] = useState('default');
 
     const handleThemeChange = () => {
@@ -24,7 +25,7 @@ const UserSidebar = () => {
 
     const sidebarStyle = {
         default: {
-             background: `linear-gradient(170deg,#176eb5,#d545d7)`
+            background: `linear-gradient(170deg,#176eb5,#d545d7)`
             // Other default theme styles
         },
         dark: {
@@ -33,10 +34,10 @@ const UserSidebar = () => {
         },
     };
 
-    const handleitems = (itemName) => {
-        handleSidebarItemClick(itemName);
-    };
-   
+    // const handleitems = (itemName) => {
+    //     handleSidebarItemClick(itemName);
+    // };
+
 
     const handleToggle = () => {
         setOpen(!open)
@@ -57,7 +58,7 @@ const UserSidebar = () => {
 
     return (
         <motion.div
-           
+
             data-open={open}
             variants={sideContainerVariants}
             animate={{ flex: open ? 3 : 1 }}
@@ -82,61 +83,81 @@ const UserSidebar = () => {
                     className='menu_icon'>
                     {open === true ? <KeyboardArrowLeftIcon /> : <KeyboardArrowRightIcon />}
                 </motion.div>
-                <div className='groups' _>
-                    <div className='group' _>
-                        <motion.h4
-                        _
-                            animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0, display: open ? '' : 'none' }}
-                        >Content</motion.h4>
-                        <motion.div
-                            animate={{ marginTop: open ? '' : '30px' }}
-                            className='items'
-                            onClick={()=>handleitems('dashboard')}
-                            >
+                <div className='groups' >
+                    <div className='gp'>
+                        <div className='group' >
+                            <motion.h4
+                                
+                                animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0, display: open ? '' : 'none' }}
+                            >Content</motion.h4>
                             <motion.div
-                            _
-                                className='dash_icon'>
-                                <DashboardRounded _/>
-                            </motion.div>
-                            <motion.span
-                            _
-                                animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
-                            >Dashboard</motion.span>
-                        </motion.div>
-                        <div className='items' 
-                        onClick={()=>handleitems('Attendance Record')}
-                        >
-                            <div
-                            _
-                            className='dash_icon'>
-                                <BarChartIcon _/>
-                            </div>
-                            <motion.span
-                            _
-                                animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
-                            >Attendance Record</motion.span>
-                        </div>
-                        
-                    </div>
-                    <div className='group' _>
-                        <motion.h4
-                        _
-                            animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0, display: open ? '' : 'none' }}
-                        >Customize</motion.h4>
-                        <div className='items' 
-                        onClick={handleThemeChange}
-                        >
-                            <div className='dash_icon'
-                            _
+                                animate={{ marginTop: open ? '' : '30px' }}
+                                className='items'
+                                onClick={() => handleSidebarItemClick('dashboard')}
                             >
-                                <ColorLensRounded _/>
+                                <motion.div
+                                    
+                                    className='dash_icon'>
+                                    {/* <DashboardRounded /> */}
+                                </motion.div>
+                                <motion.span
+                                    
+                                    animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
+                                >Dashboard</motion.span>
+                            </motion.div>
+                            <div className='items'
+                                onClick={() => handleSidebarItemClick('Attendance Record')}
+                            >
+                                <div
+                                    
+                                    className='dash_icon'>
+                                    <BarChartIcon />
+                                </div>
+                                <motion.span
+                                    
+                                    animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
+                                >Attendance Record</motion.span>
                             </div>
-                            <motion.span
-                            _
-                                animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
-                            >Theme</motion.span>
-                        </div>
 
+                        </div>
+                        <div className='group' >
+                            <motion.h4
+                                
+                                animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0, display: open ? '' : 'none' }}
+                            >Customize</motion.h4>
+                            <div className='items'
+                                onClick={handleThemeChange}
+                            >
+                                <div className='dash_icon'
+                                    
+                                >
+                                    {/* <ColorLensRounded /> */}
+                                </div>
+                                <motion.span
+                                    
+                                    animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
+                                >Theme</motion.span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className='gp-2'>
+                    <div className='group' >
+                            
+                            <div className='items'
+                                onClick={handleStudentLogout}
+                            >
+                                <div className='dash_icon'
+                                    
+                                >
+                                    <LogoutIcon />
+                                </div>
+                                <motion.span 
+                                    animate={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}
+                                >Logout</motion.span>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>

@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, } from 'react-router-dom';
 import Signup from './components/Authentication/Signup';
 import AdminDashbord from './components/Admincomponents/AdminDashbord';
 import UserDashboard from './components/Usercomponents/UserDashboard';
+import Mainpage from './components/Mainpage';
 
 
 function App() {
@@ -15,15 +16,13 @@ function App() {
     <BrowserRouter>
       <CreateContextApp>
         <Routes>
-          <Route path='/' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          
-          <Route path='/adminpanel' element={<AdminDashbord />} />
 
+          <Route path='/' element={<Mainpage />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/adminpanel' element={<AdminDashbord />} />
           <Route path='/userpanel' element={<UserDashboard />} />
           
-
-
         </Routes>
       </CreateContextApp>
     </BrowserRouter>
